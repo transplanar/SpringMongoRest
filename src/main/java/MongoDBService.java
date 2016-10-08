@@ -21,44 +21,40 @@ final class MongoDBService implements EntityService {
   @Override
   // public Entity create(Entity entity) {
   public Entity create(Entity entity) {
-      // Entity persisted = Entity.getBuilder()
-      //         .title(todo.getTitle())
-      //         .description(todo.getDescription())
-      //         .build();
-      // Entity persisted = new Entity(entity.getID(), entity.getContent(), entity.favoriteNumber())
       Entity persisted = repo.save(entity);
       return persisted;
   }
 
-  //   private EntityDTO convertToDTO(Entity model) {
-  //      EntityDTO dto = new EntityDTO();
-   //
-  //      dto.setId(model.getId());
-  //      dto.setTitle(model.getTitle());
-  //      dto.setDescription(model.getDescription());
-   //
-  //      return dto;
-  //  }
+  @Override
+  public Entity delete(String id){
+    Entity deleted = findEntityById(id);
+    repo.delete(deleted);
+    return deleted;
+  }
 
   @Override
   public List<Entity> findAll() {
-      List<Entity> entityEntries = repo.findAll();
-      return entityEntries;
+      return repo.findAll();
   }
 
-  @Override
-  public Entity delete(String id){
-    return null;
-  }
 
   @Override
   public Entity findById(String id){
-    return null;
+    return findEntityById(id);
   }
 
   @Override
-  public Entity update(Entity todo){
-    return null;
+  public Entity update(Entity entity){
+    Entity updated = findEntityById(entity.getId());
+    updated.setContent(entity.getContent());
+    updated.setFavoriteNumber(entity.getFavoriteNumber());
+    updated = repo.save(updated);
+    return updated;
+  }
+
+  private Entity findEntityById(String id){
+    Entity result = repo.findOne(id);
+    return result;
   }
 
 
