@@ -1,4 +1,4 @@
-package hello;
+package springMongo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,30 +11,31 @@ import static java.util.stream.Collectors.toList;
 @Service
 final class MongoDBService implements EntityService {
 
-  private final EntityRepository repo;
+  // private final EntityRepository repository;
+  public final EntityRepository repository;
 
   @Autowired
-  MongoDBService(EntityRepository repo){
-    this.repo = repo;
+  MongoDBService(EntityRepository repository){
+    this.repository = repository;
   }
 
   @Override
   // public Entity create(Entity entity) {
   public Entity create(Entity entity) {
-      Entity persisted = repo.save(entity);
+      Entity persisted = repository.save(entity);
       return persisted;
   }
 
   @Override
   public Entity delete(String id){
     Entity deleted = findEntityById(id);
-    repo.delete(deleted);
+    repository.delete(deleted);
     return deleted;
   }
 
   @Override
   public List<Entity> findAll() {
-      return repo.findAll();
+      return repository.findAll();
   }
 
 
@@ -48,14 +49,20 @@ final class MongoDBService implements EntityService {
     Entity updated = findEntityById(entity.getId());
     updated.setContent(entity.getContent());
     updated.setFavoriteNumber(entity.getFavoriteNumber());
-    updated = repo.save(updated);
+    updated = repository.save(updated);
     return updated;
   }
 
   private Entity findEntityById(String id){
-    Entity result = repo.findOne(id);
+    Entity result = repository.findOne(id);
     return result;
   }
 
-
+	/**
+	* Returns value of repository
+	* @return
+	*/
+	public EntityRepository getRepository() {
+		return repository;
+	}
 }

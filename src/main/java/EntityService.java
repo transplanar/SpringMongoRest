@@ -1,4 +1,4 @@
-package hello;
+package springMongo;
 
 import java.util.List;
 
