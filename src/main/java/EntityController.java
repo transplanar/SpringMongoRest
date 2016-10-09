@@ -39,9 +39,7 @@ public class EntityController {
     //  https://github.com/pkainulainen/java-advent-2014/blob/master/src/main/java/com/javaadvent/bootrest/todo/TodoController.java
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    // Entity create(@RequestBody @Valid Entity entry) {
     Entity create(@RequestBody Entity entry) {
-    // Entity create(@Valid Entity entry) {
         LOGGER.info("Creating entity using {}", entry);
         return service.create(entry);
     }
@@ -66,9 +64,7 @@ public class EntityController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    // Entity update(@RequestBody @Valid Entity entry) {
     Entity update(@RequestBody Entity entry) {
-    // Entity update(@Valid Entity todoEntry) {
         LOGGER.info("Updating entity using {}", entry);
         return service.update(entry);
     }
